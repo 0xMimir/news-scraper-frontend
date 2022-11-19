@@ -3,7 +3,7 @@ use yew::{function_component, html};
 use yew_hooks::{use_is_first_mount, use_async};
 use crate::services::NewsStore;
 
-use super::ShowNews;
+use crate::components::ShowNews;
 
 #[function_component(SearchNews)]
 pub fn search_news() -> Html{

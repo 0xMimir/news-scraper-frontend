@@ -5,7 +5,7 @@ use yew_hooks::use_async;
 
 use crate::store::{UserInfo, get_store};
 
-use super::ShowError;
+use crate::components::ShowError;
 
 #[function_component(Register)]
 pub fn register() -> Html {

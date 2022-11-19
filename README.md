@@ -26,3 +26,9 @@ npm run build
 # Runs tests
 npm test
 ```
+
+## To generate new compontent:
+
+```sh
+./create_component.py my_component
+```

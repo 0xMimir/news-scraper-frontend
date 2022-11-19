@@ -1,0 +1,11 @@
+.show-news-container {
+    display: block;
+    width: 100%;
+    margin: auto;
+    height: 50vh;
+    overflow-y: scroll;
+    background-color: #252a35;
+    border: 1px solid #1c202b;
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+}

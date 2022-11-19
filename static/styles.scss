@@ -1,3 +1,5 @@
+@import "../src/components/style.scss";
+
 body {
     padding: 10px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,6 +9,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: #282c34;
     color: #ccc;
+    overflow-x: hidden;
   }
   
 code {
@@ -29,73 +32,6 @@ nav li {
   color: #61dafb;
 }
 
-.modul-wrapper{
-  display: flex;
-  top: 0;
-  position: absolute;
-  left: 0;
-  background-color: rgba($color: #000000, $alpha: 0.4);
-  width: 100%;
-  height: 100vh;
-  color: #ddd;
-  z-index: 10;
-}
 
-.modul{
-  margin: auto;
-  background-color: #2d374f;
-  color: #000000;
-  min-width: 450px;
-  min-height: 70vh;
-  max-height: 90vh;
-  max-width: 60vh;
-  z-index: 10;
-}
 
-.inner-form{
-  width: 90%;
-  margin: auto;
-}
 
-.inner-form h1{
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.error-message{
-  position: absolute;
-  top: 5vh;
-  width: 30vh;
-  background-color: rgb(174, 49, 49);
-  border-radius: 5px;
-  text-align: center;
-  left: calc(50% - 30vh / 2);
-  color: #d4d5e7;
-}
-
-.error-message h5{
-  margin: auto;
-  padding: 1vh;
-}
-
-.show-news-container{
-  display: block;
-  width: 100%;
-  margin: auto;
-  height: 50vh;
-  overflow-y: scroll;
-  background-color: #252a35;
-  border: 1px solid #1c202b;
-}
-
-.news-entry{
-  padding: 1vh;
-}
-
-.news-image{
-  max-width: 100%;
-  max-height: 300px;
-  min-width: 100%;
-  min-height: 100%;
-  display: block;
-}

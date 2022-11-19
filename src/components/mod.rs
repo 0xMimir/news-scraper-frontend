@@ -10,8 +10,8 @@ pub use register::Register;
 mod login;
 pub use login::Login;
 
-mod nav;
-pub use nav::Nav;
+mod navbar;
+pub use navbar::Navbar;
 
 mod news_entry;
 pub use news_entry::ShowNewsEntry;

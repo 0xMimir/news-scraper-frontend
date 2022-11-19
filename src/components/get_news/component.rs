@@ -3,7 +3,7 @@ use yew_hooks::{use_async, use_is_first_mount};
 use thousands::Separable;
 
 use crate::services::NewsStore;
-use super::ShowNews;
+use crate::components::ShowNews;
 
 #[function_component(GetNews)]
 pub fn get_news() -> Html{

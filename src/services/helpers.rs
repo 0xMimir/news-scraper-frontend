@@ -6,7 +6,7 @@ use serde::{de::DeserializeOwned, Serialize};
 
 use crate::{Error, services::storage::get_key, error::ErrorJson};
 
-const API_ROOT: &str = dotenv!("API");
+pub const API_ROOT: &str = dotenv!("API");
 
 pub async fn request<B, T>(method: Method, route: &str, body: Option<B>) -> Result<T, Error>
 where

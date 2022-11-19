@@ -1,0 +1,15 @@
+.error-message {
+    position: absolute;
+    top: 5vh;
+    width: 30vh;
+    background-color: rgb(174, 49, 49);
+    border-radius: 5px;
+    text-align: center;
+    left: calc(50% - 30vh / 2);
+    color: #d4d5e7;
+}
+
+.error-message h5 {
+    margin: auto;
+    padding: 1vh;
+}
