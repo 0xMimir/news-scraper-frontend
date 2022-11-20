@@ -40,7 +40,7 @@ pub fn home() -> Html {
                         <p>
                             {"Get news, with 5 params to filter for your needs"}
                         </p>
-                        <ul>
+                        <ul style="text-align: left">
                             <li>{"Older than"}</li>
                             <li>{"Newer than"}</li>
                             <li>{"Coin"}</li>
@@ -53,7 +53,7 @@ pub fn home() -> Html {
                         <p>
                             {"Search news, either based on title or content"}
                         </p>
-                        <ul>
+                        <ul style="text-align: left">
                             <li>{"Title"}</li>
                             <li>{"Content"}</li>
                         </ul>

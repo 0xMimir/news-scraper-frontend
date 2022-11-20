@@ -1,7 +1,7 @@
 use yew::{function_component, html};
 use crate::components::Plan;
 
-#[function_component(Plans)]
+#[function_component(PlansComponent)]
 pub fn plans() -> Html{
     html!{
         <div class="align-middle align-self-center text-center">

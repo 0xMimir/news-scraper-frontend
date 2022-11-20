@@ -5,13 +5,16 @@ import stringcase
 
 components_dir = "src/components/"
 
+def get_name(name):
+    component_name = stringcase.camelcase(name)
+    component_name = component_name.replace(component_name[0], component_name[0].upper(), 1)
+    return component_name
+
 
 def get_component_template(name):
-    component_name = stringcase.camelcase(name)
-
     return f"""use yew::{{function_component, html}};
 
-#[function_component({component_name})]
+#[function_component({get_name(name)})]
 pub fn {name}() -> Html {{
     html!{{
 
@@ -44,6 +47,6 @@ append.write(
     '\n\nmod {};\npub use {}::{};'.format(
         sys.argv[1],
         sys.argv[1],
-        stringcase.capitalcase(sys.argv[1])
+        get_name(sys.argv[1])
     )
 )

@@ -5,10 +5,29 @@ use crate::{Error, services::{AuthStore, storage::get_user}};
 #[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct UserInfo{
     pub username: String,
-    pub api_key: String,
-    pub created_at: String,
     pub email: String,
-    pub plan: String
+    pub created_at: String,
+    pub plan: Plans,
+    pub api_key: String,
+    pub credits_used: i32,
+    pub credits_remaining: i32
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Deserialize, Serialize)]
+pub enum Plans{
+    Free,
+    Basic,
+    Premium
+}
+
+impl Plans{
+    pub fn get_max_calls(&self) -> i32{
+        match self{
+            Self::Free => 100,
+            Self::Basic => 20_000,
+            Self::Premium => 50_000
+        }
+    }
 }
 
 impl UserInfo{
@@ -33,7 +52,9 @@ impl Default for UserInfo{
                 api_key: "".to_owned(),
                 created_at: "".to_owned(),
                 email: "".to_owned(),
-                plan: "".to_owned()
+                plan: Plans::Free,
+                credits_remaining: 0,
+                credits_used: 0
             }
         }
     }

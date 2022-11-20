@@ -1,6 +1,9 @@
 mod context_wrapper;
 pub use context_wrapper::StoreProvider;
 
+mod container;
+pub use container::Container;
+
 mod show_errors;
 pub use show_errors::ShowError;
 
@@ -29,4 +32,7 @@ mod plan;
 pub use plan::Plan;
 
 mod plans;
-pub use plans::Plans;
+pub use plans::PlansComponent;
+
+mod not_found;
+pub use not_found::NotFound;

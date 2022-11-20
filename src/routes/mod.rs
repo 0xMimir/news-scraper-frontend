@@ -9,7 +9,7 @@ use about::About;
 use home::Home;
 use user::User;
 
-use crate::components::Plans;
+use crate::components::*;
 
 /// App routes
 #[derive(Routable, Debug, Clone, PartialEq)]
@@ -29,11 +29,21 @@ pub enum AppRoute {
 
 /// Switch app routes
 pub fn switch(routes: &AppRoute) -> Html {
-    match routes.clone() {
+    if routes == &AppRoute::PageNotFound{
+        return html!{ <NotFound /> };
+    }
+
+    let html = match routes{
         AppRoute::Home => html! { <Home /> },
         AppRoute::About => html! { <About /> },
-        AppRoute::Plans => html! { <Plans /> },
+        AppRoute::Plans => html! { <PlansComponent /> },
         AppRoute::User => html!{ <User /> },
-        AppRoute::PageNotFound => html! { "Page not found" },
+        AppRoute::PageNotFound => html!{}
+    };
+
+    html!{
+        <Container>
+            {html}
+        </Container>
     }
 }
