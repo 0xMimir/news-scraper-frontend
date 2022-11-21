@@ -1,19 +1,24 @@
 use std::fmt::Debug;
 
-use dotenv_codegen::dotenv;
+use once_cell::sync::Lazy;
 use reqwest::{Method, Client, header::HeaderValue};
 use serde::{de::DeserializeOwned, Serialize};
 
 use crate::{Error, services::storage::get_key, error::ErrorJson};
+use dotenv::var;
 
-pub const API_ROOT: &str = dotenv!("API");
+pub static API_ROOT: Lazy<String> = Lazy::new(|| {get_api_root()});
+
+fn get_api_root() -> String{
+    var("API").expect("API root is not set")
+}
 
 pub async fn request<B, T>(method: Method, route: &str, body: Option<B>) -> Result<T, Error>
 where
     T: DeserializeOwned + 'static + Debug,
     B: Serialize + Debug
 {
-    let url = format!("{}{}", API_ROOT, route);
+    let url = format!("{}{}", API_ROOT.as_str(), route);
 
     let mut builder = Client::new()
         .request(method, url)

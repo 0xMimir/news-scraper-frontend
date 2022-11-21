@@ -41,7 +41,7 @@ pub fn nav() -> Html {
         <nav class="navbar navbar-expand-lg">
             <span class="navbar-brand"><Link<AppRoute> to={AppRoute::Home} classes="app-link" >{ " Bespoke News " }</Link<AppRoute>></span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
-                <span class="navbar-toggler-icon"></span>
+                <i class="bi bi-arrow-down-circle app-link"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -55,7 +55,7 @@ pub fn nav() -> Html {
                         <Link<AppRoute> to={AppRoute::About} classes="app-link" >{ " About " }</Link<AppRoute>>
                     </li>
                     <li class="nav-item li-space">
-                        <a href={format!("{}/swagger-ui/#/", API_ROOT)} class="app-link">{" Docs "}</a>
+                        <a href={format!("{}/swagger-ui/#/", API_ROOT.as_str())} class="app-link">{" Docs "}</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
