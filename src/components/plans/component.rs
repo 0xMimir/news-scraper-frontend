@@ -1,5 +1,5 @@
 use yew::{function_component, html};
-use crate::components::Plan;
+use crate::{components::Plan, store::Plans};
 
 #[function_component(PlansComponent)]
 pub fn plans() -> Html{
@@ -9,7 +9,7 @@ pub fn plans() -> Html{
             <p>{"Available plans"}</p>
             <div class="row">
                 <Plan
-                    plan_name={"Free"}
+                    plan_name={Plans::Free}
                     calls={(100, "day".to_owned())}
                     functionality={vec![
                         "Latest news only".to_owned(),
@@ -18,7 +18,7 @@ pub fn plans() -> Html{
                     price={0.}
                 />
                 <Plan
-                    plan_name={"Basic"}
+                    plan_name={Plans::Basic}
                     calls={(20_000, "month".to_owned())}
                     functionality={vec![
                         "Search news for keywords".to_owned(),
@@ -26,9 +26,10 @@ pub fn plans() -> Html{
                         "Full article data".to_owned()
                     ]}
                     price={9.99}
+                    color={"#262627"}
                 />
                 <Plan
-                    plan_name={"Premium"}
+                    plan_name={Plans::Premium}
                     calls={(50_000, "month".to_owned())}
                     functionality={vec![
                         "Full functionality from previus plans".to_owned(),
@@ -37,6 +38,7 @@ pub fn plans() -> Html{
                         "Sentiment analysis".to_owned(),
                     ]}
                     price={49.99}
+                    color={"#5160FD"}
                 />
             </div>
         </div>

@@ -1,10 +1,22 @@
 .plan-div{
-    min-height: 40vh;
+    min-height: 50vh;
     height: 100%;
-    text-align: center;
+    width: 100%;
+    text-align: left;
     padding: 1vh;
-    background-color: #252a35;
     border : 1px solid #1c202b;
+}
+
+.plan-div button{
+    width: 80%;
+    position: absolute;
+    bottom: 0;
+    height: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #252524;
+    background-color: inherit;
+    color: #D9D9D8;
 }
 
 .plan-div-border{
@@ -13,6 +25,17 @@
 
 .plan-div ul{
     text-align: left;
+    padding: 0%;
+    list-style: none;
+}
+
+.plan-div li::before{
+    content: "\2714";
+    color: greenyellow;
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em;
+    margin-right: 5px;
 }
 
 .plan-price{
