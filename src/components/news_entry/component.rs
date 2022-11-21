@@ -20,6 +20,13 @@ pub fn news_entry(props: &Props) -> Html{
 
     html!{
         <div class="row news-entry">
+            <div class={format!("col-{} text-justify", if valid_image {8} else {12})}>
+				<a href={entry.url.clone()} target="_blank" rel="noreferrer noopener">
+                	<h5>{entry.title.clone()}</h5>
+				</a>
+				<p>{format!("Published: {}", published_at)}</p>
+				<p>{entry.description.clone()}</p>
+            </div>
             {if let Some(img) = entry.image{
                 html!{
                     <div class="col-4">
@@ -33,13 +40,6 @@ pub fn news_entry(props: &Props) -> Html{
                     <></>
                 }
             }}
-            <div class={format!("col-{} text-justify", if valid_image {8} else {12})}>
-				<a href={entry.url.clone()} target="_blank" rel="noreferrer noopener">
-                	<h5>{entry.title.clone()}</h5>
-				</a>
-				<p>{format!("Published: {}", published_at)}</p>
-				<p>{entry.description.clone()}</p>
-            </div>
         </div>
     }
 }

@@ -41,7 +41,7 @@ pub fn nav() -> Html {
         <nav class="navbar navbar-expand-lg">
             <span class="navbar-brand"><Link<AppRoute> to={AppRoute::Home} classes="app-link" >{ " Bespoke News " }</Link<AppRoute>></span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02">
-                <span class="navbar-toggler-icon"></span>
+                <i class="bi bi-arrow-down-circle app-link"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">

@@ -2,9 +2,8 @@ use yew::{function_component, html, Callback};
 use yew_hooks::use_clipboard;
 use yew_router::prelude::{use_history, History};
 
-use crate::{services::storage::get_key, store::get_store};
 use crate::store::Plans;
-
+use crate::{services::storage::get_key, store::get_store};
 
 use super::AppRoute;
 use crate::components::PlansComponent;
@@ -28,31 +27,25 @@ pub fn user() -> Html {
 
     html! {
         <>
+            <br />
+            <h2>{&user.username}</h2>
             <div class="row">
-                <div class="col-1">
-                    <i class="bi bi-person-circle" style="font-size: 80px"></i>
-                </div>
-                <div class="col-11">
-                    <br />
-                    <h2>{&user.username}</h2>
-                    <div class="row">
-                        <div class="col-6">
-                            <span>{format!("Email: {}", &user.email)}</span> <br />
-                            <span>{format!("Plan: {:?}", &user.plan)}</span> <br />
-                            <p>{"Api key:"}</p>
-                            <code style="background-color: rgba(0,0,0, 0.4);padding: 8px">
+                <div class="col-md">
+                    <span>{format!("Email: {}", &user.email)}</span> <br />
+                    <span>{format!("Plan: {:?}", &user.plan)}</span> <br />
+                    <p>{"Api key:"}</p>
+                    <code style="background-color: rgba(0,0,0, 0.4);padding: 8px">
                                 {&user.api_key}
                                 <button {onclick} style="background: none;margin-left: 5px;border: none;color: white;margin-right: 0;">
                                     <i class="bi bi-clipboard"></i>
                                 </button>
-                            </code>
-                        </div>
-                        <div class="col-6">
-                            <span>{format!("Calls used: {}", &user.credits_used)}</span> <br />
-                            <span>{format!("Calls remaining: {}", &user.credits_remaining)}</span> <br />
-                            <span>{format!("Max calls: {}", &user.plan.get_max_calls())}</span> <br />
-                        </div>
-                    </div>
+                    </code>
+                </div>
+                <div class="col-md">
+                    <span>{format!("Calls used: {}", &user.credits_used)}</span> <br />
+                    <span>{format!("Calls remaining: {}", &user.credits_remaining)}</span> <br />
+                    <span>{format!("Max calls: {}", &user.plan.get_max_calls())}</span> <br />
+                    //<span>{format!("Restarts in: ")}</span>
                 </div>
             </div>
             <br />

@@ -27,6 +27,9 @@ pub fn plans() -> Html{
                     ]}
                     price={9.99}
                     color={"#262627"}
+                    button_color={"#5161FD"}
+                    border_color={"#5161FD"}
+                    button_text_color={"#FEFDFE"}
                 />
                 <Plan
                     plan_name={Plans::Premium}
@@ -39,6 +42,9 @@ pub fn plans() -> Html{
                     ]}
                     price={49.99}
                     color={"#5160FD"}
+                    button_color={"#FEFDFE"}
+                    border_color={"#FEFDF3"}
+                    button_text_color={"#262627"}
                 />
             </div>
         </div>
