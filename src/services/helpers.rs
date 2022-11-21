@@ -5,7 +5,7 @@ use serde::{de::DeserializeOwned, Serialize};
 
 use crate::{Error, services::storage::get_key, error::ErrorJson};
 
-pub const API_ROOT: &str = "http://localhost:3000";
+pub static API_ROOT: &str = "http://localhost:3000";
 
 pub async fn request<B, T>(method: Method, route: &str, body: Option<B>) -> Result<T, Error>
 where
