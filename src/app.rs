@@ -12,9 +12,6 @@ pub fn app() -> Html {
             <BrowserRouter>
                 <Navbar />
                 <Switch<AppRoute> render={Switch::render(switch)} />
-                <div class="container">
-                    
-                </div>
             </BrowserRouter>
         </StoreProvider>
     }

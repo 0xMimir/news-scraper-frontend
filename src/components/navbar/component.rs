@@ -9,10 +9,7 @@ use crate::{routes::AppRoute, services::storage::get_key, store::get_store};
 #[function_component(Navbar)]
 pub fn nav() -> Html {
     let store = get_store();
-    let loged_in = match get_key() {
-        Some(_) => true,
-        None => false,
-    };
+    let loged_in = get_key().is_some();
     let register = use_state_eq(|| false);
     let state = use_state_eq(|| false);
     let username = &store.get_user().username;
@@ -28,7 +25,6 @@ pub fn nav() -> Html {
     };
 
     let logout = {
-        let store = store.clone();
         Callback::from(move |_: MouseEvent| store.logout())
     };
 
@@ -105,6 +101,7 @@ pub fn nav() -> Html {
                                     {"X"}
                                 </button>
                                 {
+                                    #[allow(clippy::let_unit_value)] // Unknow error in yew
                                     if *register{
                                         html!{<Register />}
                                     }else{

@@ -15,9 +15,9 @@ pub fn register() -> Html {
     let email_handle = use_state(|| "".to_string());
 
     let register_handle = {
-        let username = (*username_handle.clone()).clone();
-        let password = (*password_handle.clone()).clone();
-        let email = (*email_handle.clone()).clone();
+        let username = (*username_handle).clone();
+        let password = (*password_handle).clone();
+        let email = (*email_handle).clone();
         use_async(async move {
             UserInfo::register(&email, &username, &password).await
         })

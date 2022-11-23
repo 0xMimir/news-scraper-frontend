@@ -50,7 +50,7 @@ pub fn plan(props: &Props) -> Html {
     html! {
         <div class="col-md plan-div-border">
             <div class="plan-div" style={format!("background-color: {}", background_color)}>
-                <h3>{if &props.plan_name == &Plans::Free{
+                <h3>{if props.plan_name == Plans::Free{
                     {"Free".to_owned()}
                 }else{
                     {format!("{:.2}$/mo", props.price)}

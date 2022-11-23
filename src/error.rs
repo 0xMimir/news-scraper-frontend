@@ -23,7 +23,9 @@ pub enum Error{
 impl From<StatusCode> for Error{
     fn from(err: StatusCode) -> Self{
         match err.as_u16(){
-
+            400 => Self::InvalidInput,
+            404 => Self::NotFound,
+            401 => Self::Unauthorized,
             _ => Self::InternalServerError
         }
     }
@@ -45,8 +47,8 @@ impl From<ErrorJson> for Error{
     }
 }
 
-impl Error{
-    pub fn to_string(&self) -> String{
+impl ToString for Error{
+    fn to_string(&self) -> String {
         match self{
             Error::RequestError => "Request Error",
             Error::SerdeError => "Parse Error",

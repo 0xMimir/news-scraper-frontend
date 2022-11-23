@@ -7,6 +7,7 @@ use crate::store::{UserInfo, get_store};
 
 use crate::components::ShowError;
 
+#[allow(clippy::let_unit_value)]
 #[function_component(Login)]
 pub fn login() -> Html {
     let store = get_store();
@@ -14,8 +15,8 @@ pub fn login() -> Html {
     let password_handle = use_state(|| "".to_string());
 
     let login_handle = {
-        let username = (*username_handle.clone()).clone();
-        let password = (*password_handle.clone()).clone();
+        let username = (*username_handle).clone();
+        let password = (*password_handle).clone();
         use_async(async move {
             UserInfo::login(&username, &password).await
         })

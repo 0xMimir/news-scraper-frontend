@@ -12,7 +12,7 @@ use user::User;
 use crate::components::*;
 
 /// App routes
-#[derive(Routable, Debug, Clone, PartialEq)]
+#[derive(Routable, Debug, Clone, PartialEq, Eq)]
 pub enum AppRoute {
     #[at("/about")]
     About,
@@ -28,22 +28,21 @@ pub enum AppRoute {
 }
 
 /// Switch app routes
+#[allow(clippy::let_unit_value)]
 pub fn switch(routes: &AppRoute) -> Html {
     if routes == &AppRoute::PageNotFound{
         return html!{ <NotFound /> };
     }
-
-    let html = match routes{
-        AppRoute::Home => html! { <Home /> },
-        AppRoute::About => html! { <About /> },
-        AppRoute::Plans => html! { <PlansComponent /> },
-        AppRoute::User => html!{ <User /> },
-        AppRoute::PageNotFound => html!{}
-    };
-
+    
     html!{
         <Container>
-            {html}
+            {match routes{
+                AppRoute::Home => html! { <Home /> },
+                AppRoute::About => html! { <About /> },
+                AppRoute::Plans => html! { <PlansComponent /> },
+                AppRoute::User => html!{ <User /> },
+                AppRoute::PageNotFound => html!{}
+            }}
         </Container>
     }
 }

@@ -20,11 +20,10 @@ pub fn user() -> Html {
 
     let clipboard = use_clipboard();
     let onclick = {
-        let clipboard = clipboard.clone();
         let api_key = user.api_key.clone();
         Callback::from(move |_| clipboard.write_text(api_key.clone()))
     };
-
+    
     html! {
         <>
             <br />
@@ -51,10 +50,10 @@ pub fn user() -> Html {
             <br />
             <br />
             {
-                if user.plan == Plans::Free{
-                    html!{<PlansComponent />}
-                }else{
-                    html!{}
+                #[allow(clippy::let_unit_value)] // Unknow error in yew
+                match user.plan{
+                    Plans::Free => html!{<PlansComponent />},
+                    _ => html!{}
                 }
             }
         </>
