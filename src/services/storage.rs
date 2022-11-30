@@ -17,7 +17,7 @@ lazy_static!{
 }
 
 pub fn set_user(user: UserInfo){
-    LocalStorage::set(STORAGE_KEY, user.clone())
+    LocalStorage::set(STORAGE_KEY, &user)
         .expect("failed to set api_key");
 
     let mut token_lock = TOKEN.write();

@@ -1,11 +1,12 @@
 use std::fmt::Debug;
 
+use dotenv_codegen::dotenv;
 use reqwest::{Method, Client, header::HeaderValue};
 use serde::{de::DeserializeOwned, Serialize};
 
 use crate::{Error, services::storage::get_key, error::ErrorJson};
 
-pub static API_ROOT: &str = "http://localhost:3000";
+pub static API_ROOT: &str = dotenv!("API");
 
 pub async fn request<B, T>(method: Method, route: &str, body: Option<B>) -> Result<T, Error>
 where

@@ -36,3 +36,6 @@ pub use plans::PlansComponent;
 
 mod not_found;
 pub use not_found::NotFound;
+
+mod scrapers_info;
+pub use scrapers_info::ScrapersInfo;

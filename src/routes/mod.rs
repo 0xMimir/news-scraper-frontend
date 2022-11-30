@@ -4,10 +4,12 @@ use yew_router::prelude::*;
 mod about;
 mod home;
 mod user;
+mod admin;
 
 use about::About;
 use home::Home;
 use user::User;
+use admin::AdminPage;
 
 use crate::components::*;
 
@@ -20,6 +22,8 @@ pub enum AppRoute {
     Plans,
     #[at("/self")]
     User,
+    #[at("/admin")]
+    AdminPage,
     #[not_found]
     #[at("/page-not-found")]
     PageNotFound,
@@ -40,7 +44,9 @@ pub fn switch(routes: &AppRoute) -> Html {
                 AppRoute::Home => html! { <Home /> },
                 AppRoute::About => html! { <About /> },
                 AppRoute::Plans => html! { <PlansComponent /> },
-                AppRoute::User => html!{ <User /> },
+                AppRoute::User => html! { <User /> },
+                AppRoute::AdminPage => html! { <AdminPage />},
+                // This should never happen
                 AppRoute::PageNotFound => html!{}
             }}
         </Container>

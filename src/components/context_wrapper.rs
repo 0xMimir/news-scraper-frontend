@@ -5,7 +5,7 @@ use yew::{
 use yew_hooks::{use_async, use_mount};
 
 use crate::{
-    services::{storage::get_key, AuthStore},
+    services::{storage::{get_key, set_user}, AuthStore},
     store::UserInfo,
 };
 
@@ -33,6 +33,7 @@ pub fn store_provider(props: &Props) -> Html {
         use_effect_with_deps(
             move |update_user| {
                 if let Some(user) = &update_user.data {
+                    set_user(user.clone());
                     store.set(user.clone());
                 }
                 if update_user.error.is_some() {

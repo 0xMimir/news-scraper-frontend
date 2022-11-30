@@ -21,6 +21,7 @@ pub enum Plans {
     Free,
     Basic,
     Premium,
+    Staff
 }
 
 impl Plans {
@@ -29,6 +30,7 @@ impl Plans {
             Self::Free => 100,
             Self::Basic => 20_000,
             Self::Premium => 50_000,
+            Self::Staff => 100_000_00,
         }
     }
 }
