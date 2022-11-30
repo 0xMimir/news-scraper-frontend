@@ -10,15 +10,17 @@ struct RowParams {
 
 #[function_component(TableRow)]
 fn table_row(props: &RowParams) -> Html {
+    let total: f64 = (props.row_data.total + 1).into();
+    
     html! {
         <tr>
             <th>{&props.row_data.blog_id}</th>
-            <td>{&props.row_data.total}</td>
-            <td>{&props.row_data.scraped}</td>
-            <td>{&props.row_data.unscraped}</td>
-            <td>{&props.row_data.deleted}</td>
-            <td>{&props.row_data.processed}</td>
-            <td>{&props.row_data.error}</td>
+            <td>{format!("{}", props.row_data.total)}</td>
+            <td>{format!("{}({:.2}%)", props.row_data.scraped, (Into::<f64>::into(props.row_data.scraped) / total * 100.0))}</td>
+            <td>{format!("{}({:.2}%)", props.row_data.unscraped, (Into::<f64>::into(props.row_data.unscraped) / total * 100.0))}</td>
+            <td>{format!("{}({:.2}%)", props.row_data.deleted, (Into::<f64>::into(props.row_data.deleted) / total * 100.0))}</td>  
+            <td>{format!("{}({:.2}%)", props.row_data.processed, (Into::<f64>::into(props.row_data.processed) / total * 100.0))}</td>
+            <td>{format!("{}({:.2}%)", props.row_data.error, (Into::<f64>::into(props.row_data.error) / total * 100.0))}</td>  
         </tr>
     }
 }
