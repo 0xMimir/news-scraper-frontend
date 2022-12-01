@@ -3,6 +3,7 @@ use yew_router::prelude::*;
 
 use crate::components::{Login, Register};
 use crate::services::helpers::API_ROOT;
+use crate::store::Plans;
 use crate::{routes::AppRoute, services::storage::get_key, store::get_store};
 
 /// Nav component
@@ -12,7 +13,7 @@ pub fn nav() -> Html {
     let loged_in = get_key().is_some();
     let register = use_state_eq(|| false);
     let state = use_state_eq(|| false);
-    let username = &store.get_user().username;
+    let user = &store.get_user();
 
     let open_modal = {
         let state = state.clone();
@@ -24,9 +25,7 @@ pub fn nav() -> Html {
         Callback::from(move |_| state.set(false))
     };
 
-    let logout = {
-        Callback::from(move |_: MouseEvent| store.logout())
-    };
+    let logout = { Callback::from(move |_: MouseEvent| store.logout()) };
 
     let register_callback = {
         let register = register.clone();
@@ -50,6 +49,17 @@ pub fn nav() -> Html {
                     <li class="nav-item li-space">
                         <Link<AppRoute> to={AppRoute::About} classes="app-link" >{ " About " }</Link<AppRoute>>
                     </li>
+                    {
+                        if user.plan == Plans::Staff{
+                            html!{
+                                <li class="nav-item li-space">
+                                    <Link<AppRoute> to={AppRoute::AdminPage} classes="app-link" >{ " Dashboard " }</Link<AppRoute>>
+                                </li>
+                            }
+                        }else{
+                            html!{}
+                        }
+                    }
                     <li class="nav-item li-space">
                         <a href={format!("{}/swagger-ui/#/", API_ROOT)} class="app-link">{" Docs "}</a>
                     </li>
@@ -66,7 +76,7 @@ pub fn nav() -> Html {
                                         data-toggle="dropdown"
                                         style="color:white"
                                     >
-                                        <Link<AppRoute> to={AppRoute::User} classes="app-link" >{ username }</Link<AppRoute>>
+                                        <Link<AppRoute> to={AppRoute::User} classes="app-link" >{ &user.username }</Link<AppRoute>>
                                     </button>
                                     <div
                                         class="dropdown-menu"
@@ -97,24 +107,30 @@ pub fn nav() -> Html {
                     html!{
                         <div class="modul-wrapper">
                             <div class="modul">
-                                <button onclick={close_modal} class="btn btn-link">
-                                    {"X"}
-                                </button>
-                                {
-                                    #[allow(clippy::let_unit_value)] // Unknow error in yew
-                                    if *register{
-                                        html!{<Register />}
-                                    }else{
-                                        html!{<Login />}
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button onclick={close_modal} class="btn btn-link">
+                                        {"X"}
+                                    </button>
+                                </div>
+                                <div>
+                                    {
+                                        #[allow(clippy::let_unit_value)] // Unknow error in yew
+                                        if *register{
+                                            html!{<Register />}
+                                        }else{
+                                            html!{<Login />}
+                                        }
                                     }
-                                }
-                                <button onclick={register_callback}>{
-                                    if *register{
-                                        "Already a user, Login"
-                                    }else{
-                                        "Not a user, Register"
-                                    }
-                                }</button>
+                                </div>
+                                <div style="text-align: center">
+                                    <button onclick={register_callback} style="btn">{
+                                        if *register{
+                                            "Already a user, Login"
+                                        }else{
+                                            "Not a user, Register"
+                                        }
+                                    }</button>
+                                </div>
                             </div>
                         </div>
                     }

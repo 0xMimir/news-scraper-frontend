@@ -1,3 +1,5 @@
+use std::f32::INFINITY;
+
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -25,12 +27,12 @@ pub enum Plans {
 }
 
 impl Plans {
-    pub fn get_max_calls(&self) -> i32 {
+    pub fn get_max_calls(&self) -> f32 {
         match self {
-            Self::Free => 100,
-            Self::Basic => 20_000,
-            Self::Premium => 50_000,
-            Self::Staff => 100_000_00,
+            Self::Free => 100.0,
+            Self::Basic => 20_000.0,
+            Self::Premium => 50_000.0,
+            Self::Staff => INFINITY,
         }
     }
 }

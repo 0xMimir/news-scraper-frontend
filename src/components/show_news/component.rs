@@ -9,15 +9,14 @@ pub struct Props{
 
 #[function_component(ShowNews)]
 pub fn show_news(props: &Props) -> Html{
-    let entries = props.news
-        .iter()
-        .map(|e| e.to_html())
-        .collect::<Html>();
-
-
     html!{
         <div class="show-news-container">{
-            entries
+            {
+                props.news
+                    .iter()
+                    .map(|e| e.to_html())
+                    .collect::<Html>()
+            }
         }</div>
     }
 }

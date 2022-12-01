@@ -10,17 +10,51 @@ struct RowParams {
 
 #[function_component(TableRow)]
 fn table_row(props: &RowParams) -> Html {
-    let total: f64 = (props.row_data.total + 1).into();
-    
+    let total: f64 = props.row_data.total.into();
+    let css_class = match Into::<f64>::into(props.row_data.error) / total > 0.001 {
+        true => "bg-danger",
+        false => "",
+    };
+
     html! {
-        <tr>
+        <tr class={css_class}>
             <th>{&props.row_data.blog_id}</th>
             <td>{format!("{}", props.row_data.total)}</td>
-            <td>{format!("{}({:.2}%)", props.row_data.scraped, (Into::<f64>::into(props.row_data.scraped) / total * 100.0))}</td>
-            <td>{format!("{}({:.2}%)", props.row_data.unscraped, (Into::<f64>::into(props.row_data.unscraped) / total * 100.0))}</td>
-            <td>{format!("{}({:.2}%)", props.row_data.deleted, (Into::<f64>::into(props.row_data.deleted) / total * 100.0))}</td>  
-            <td>{format!("{}({:.2}%)", props.row_data.processed, (Into::<f64>::into(props.row_data.processed) / total * 100.0))}</td>
-            <td>{format!("{}({:.2}%)", props.row_data.error, (Into::<f64>::into(props.row_data.error) / total * 100.0))}</td>  
+            <td>{
+                if props.row_data.scraped == 0{
+                    "0".to_owned()
+                }else{
+                    format!("{}({:.2}%)", props.row_data.scraped, (Into::<f64>::into(props.row_data.scraped) / total * 100.0))
+                }
+            }</td>
+            <td>{
+                if props.row_data.unscraped == 0{
+                    "0".to_owned()
+                }else{
+                    format!("{}({:.2}%)", props.row_data.unscraped, (Into::<f64>::into(props.row_data.unscraped) / total * 100.0))
+                }
+            }</td>
+            <td>{
+                if props.row_data.deleted == 0{
+                    "0".to_owned()
+                }else{
+                    format!("{}({:.2}%)", props.row_data.deleted, (Into::<f64>::into(props.row_data.deleted) / total * 100.0))
+                }
+            }</td>
+            <td>{
+                if props.row_data.processed == 0{
+                    "0".to_owned()
+                }else{
+                    format!("{}({}%)", props.row_data.processed, (Into::<f64>::into(props.row_data.processed) / total * 100.0))
+                }
+            }</td>
+            <td>{
+                if props.row_data.error == 0{
+                    "0".to_owned()
+                }else{
+                    format!("{}({:.2}%)", props.row_data.error, (Into::<f64>::into(props.row_data.error) / total * 100.0))
+                }
+            }</td>
         </tr>
     }
 }

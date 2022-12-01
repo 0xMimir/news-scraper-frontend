@@ -1,29 +1,25 @@
 use yew::{function_component, html};
 use yew_hooks::{use_async, use_is_first_mount};
 
-use crate::{components::{GetNews, SearchNews}, services::NewsStore};
+use crate::{components::GetNews, services::NewsStore};
 
 /// Home page
 #[function_component(Home)]
 pub fn home() -> Html {
-    let sources_count = use_async(async move {
-        NewsStore::get_news_count().await
-    });
+    let sources_count = use_async(async move { NewsStore::get_news_count().await });
 
-    if use_is_first_mount(){
+    if use_is_first_mount() {
         sources_count.run()
     }
 
     let sources_count = {
-        match &sources_count.data{
-            Some(sources) => {
-                (sources / 5) * 5
-            },
-            None => 20
+        match &sources_count.data {
+            Some(sources) => (sources / 5) * 5,
+            None => 20,
         }
     };
-    
-    html!{
+
+    html! {
         <div class="align-middle align-self-center text-center">
             <h1>{"Bespoke Crypto News API"}</h1>
             <p>
@@ -51,7 +47,6 @@ pub fn home() -> Html {
                 </div>
             </div>
             <GetNews />
-            <SearchNews />
         </div>
     }
 }

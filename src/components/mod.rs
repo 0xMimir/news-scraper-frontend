@@ -25,9 +25,6 @@ pub use show_news::ShowNews;
 mod get_news;
 pub use get_news::GetNews;
 
-mod search_news;
-pub use search_news::SearchNews;
-
 mod plan;
 pub use plan::Plan;
 

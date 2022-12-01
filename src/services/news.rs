@@ -27,13 +27,10 @@ pub struct NewsEntry{
     pub url: String,
     pub title: String,
     pub image: Option<String>,
-    pub released_at: String,
-    pub released_at_unix: i64,
-    pub content: String,
+    pub released_at_unix: Option<i64>,
     pub description: String,
     pub blog_name: String,
     pub blog_id: String,
-    pub sentiment: Sentiment
 }
 
 #[derive(Deserialize, Debug, Clone, PartialEq, Eq)]
