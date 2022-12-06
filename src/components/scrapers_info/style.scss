@@ -1,0 +1,19 @@
+.table-fixed {
+    width: 100%;
+}
+
+.table-fixed thead th {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.table-fixed tfoot td {
+    position: sticky;
+    position: -webkit-sticky;
+    bottom: 0;
+    z-index: 999;
+    background-color: inherit;
+    color: inherit;
+}

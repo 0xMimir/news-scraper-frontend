@@ -18,7 +18,7 @@ fn table_row(props: &RowParams) -> Html {
 
     html! {
         <tr class={css_class}>
-            <th>{&props.row_data.blog_id}</th>
+            <td>{&props.row_data.blog_id}</td>
             <td>{format!("{}", props.row_data.total)}</td>
             <td>{
                 if props.row_data.scraped == 0{
@@ -45,7 +45,7 @@ fn table_row(props: &RowParams) -> Html {
                 if props.row_data.processed == 0{
                     "0".to_owned()
                 }else{
-                    format!("{}({}%)", props.row_data.processed, (Into::<f64>::into(props.row_data.processed) / total * 100.0))
+                    format!("{}({:.2}%)", props.row_data.processed, (Into::<f64>::into(props.row_data.processed) / total * 100.0))
                 }
             }</td>
             <td>{
@@ -118,7 +118,7 @@ pub fn scrapers_info() -> Html {
     html! {
         <>
             <h4>{"Scrapers info:"}</h4>
-            <table class="table table-dark">
+            <table class="table table-dark table-fixed">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">{"Scraper"}</th>
@@ -138,8 +138,11 @@ pub fn scrapers_info() -> Html {
                     }else{
                         html!{}
                     }}
-                    <TableRow row_data={sum_row} />
+                    
                 </tbody>
+                <tfoot class="thead-dark">
+                    <TableRow row_data={sum_row} />
+                </tfoot>
             </table>
         </>
     }
