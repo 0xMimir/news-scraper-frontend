@@ -1,7 +1,7 @@
 use chrono::NaiveDateTime;
 use yew::{function_component, html, Html, Properties};
 
-use crate::store::news::NewsEntry;
+use crate::store::objects::news::NewsEntry;
 
 
 #[derive(Properties, PartialEq, Eq)]
@@ -9,8 +9,8 @@ pub struct Props {
     pub entry: NewsEntry,
 }
 
-#[function_component(ShowNewsEntry)]
-pub fn news_entry(props: &Props) -> Html {
+#[function_component(NewsEntryHtml)]
+pub fn news_entry_html(props: &Props) -> Html {
     let entry = props.entry.clone();
 
     let naive = NaiveDateTime::from_timestamp_opt(
@@ -54,7 +54,7 @@ pub fn news_entry(props: &Props) -> Html {
 impl NewsEntry {
     pub fn to_html(&self) -> Html {
         html! {
-            <ShowNewsEntry entry={self.clone()} />
+            <NewsEntryHtml entry={self.clone()} />
         }
     }
 }

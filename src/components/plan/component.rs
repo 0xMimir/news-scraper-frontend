@@ -1,7 +1,7 @@
 use thousands::Separable;
 use yew::{function_component, html, Html, Properties};
 
-use crate::store::user::Plans;
+use crate::store::objects::user::Plans;
 
 
 #[derive(Properties, PartialEq)]

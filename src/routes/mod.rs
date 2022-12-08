@@ -1,5 +1,4 @@
-use yew::prelude::*;
-use yew_router::prelude::*;
+use yew::{html, Html};
 
 mod about;
 mod home;
@@ -10,6 +9,7 @@ use about::About;
 use home::Home;
 use user::User;
 use admin::AdminPage;
+use yew_router::Routable;
 
 use crate::components::*;
 

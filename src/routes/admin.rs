@@ -1,10 +1,7 @@
 use yew::{function_component, html};
 use yew_router::prelude::{use_history, History};
 
-use crate::{
-    routes::ScrapersInfo,
-    store::{context::get_store, user::Plans},
-};
+use crate::{context::get_store, routes::ScrapersInfo, store::objects::user::Plans};
 
 use super::AppRoute;
 

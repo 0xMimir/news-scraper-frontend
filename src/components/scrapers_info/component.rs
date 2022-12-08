@@ -1,8 +1,7 @@
 use yew::{function_component, html, Html, Properties};
 use yew_hooks::{use_async, use_interval, use_is_first_mount};
 
-use crate::store::admin::{ScraperInfo, AdminStore};
-
+use crate::store::{admin::AdminStore, objects::scraper_info::ScraperInfo};
 
 #[derive(Properties, PartialEq)]
 struct RowParams {
@@ -139,7 +138,7 @@ pub fn scrapers_info() -> Html {
                     }else{
                         html!{}
                     }}
-                    
+
                 </tbody>
                 <tfoot class="thead-dark">
                     <TableRow row_data={sum_row} />

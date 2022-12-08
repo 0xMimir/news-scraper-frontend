@@ -1,11 +1,5 @@
-mod container;
-pub use container::Container;
-
-mod show_errors;
-pub use show_errors::ShowError;
-
-mod register;
-pub use register::Register;
+mod get_news;
+pub use get_news::GetNews;
 
 mod login;
 pub use login::Login;
@@ -13,23 +7,29 @@ pub use login::Login;
 mod navbar;
 pub use navbar::Navbar;
 
-mod news_entry;
-pub use news_entry::ShowNewsEntry;
-
-mod show_news;
-pub use show_news::ShowNews;
-
-mod get_news;
-pub use get_news::GetNews;
+mod not_found;
+pub use not_found::NotFound;
 
 mod plan;
 pub use plan::Plan;
 
-mod plans;
-pub use plans::PlansComponent;
+mod plans_component;
+pub use plans_component::PlansComponent;
 
-mod not_found;
-pub use not_found::NotFound;
+mod register;
+pub use register::Register;
 
 mod scrapers_info;
 pub use scrapers_info::ScrapersInfo;
+
+mod show_error;
+pub use show_error::ShowError;
+
+mod show_news;
+pub use show_news::ShowNews;
+
+mod news_entry_html;
+pub use news_entry_html::NewsEntryHtml;
+
+mod container;
+pub use container::Container;

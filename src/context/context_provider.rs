@@ -1,21 +1,20 @@
 use yew::{
-    function_component, html, use_effect_with_deps, use_state, Children, ContextProvider,
+    function_component, html, use_effect_with_deps, use_state, Children, ContextProvider as CTXProvider,
     Properties, UseStateHandle,
 };
 use yew_hooks::{use_async, use_mount};
 
-use crate::helpers::storage::{get_key, set_user};
+use crate::{helpers::storage::{get_key, set_user}, store::{objects::user::User, user::UserStore}};
 
-use super::user::UserStore;
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct Props {
     pub children: Children,
 }
 
-#[function_component(StoreProvider)]
-pub fn store_provider(props: &Props) -> Html {
-    let store = use_state(UserStore::default);
+#[function_component(ContextProvider)]
+pub fn context_provider(props: &Props) -> Html {
+    let store = use_state(User::default);
     let update_user = use_async(async move { UserStore::current().await });
 
     {
@@ -36,7 +35,7 @@ pub fn store_provider(props: &Props) -> Html {
                     store.set(user.clone());
                 }
                 if update_user.error.is_some() {
-                    store.set(UserStore::empty())
+                    store.set(User::default())
                 }
                 || ()
             },
@@ -45,8 +44,8 @@ pub fn store_provider(props: &Props) -> Html {
     }
 
     html! {
-        <ContextProvider<UseStateHandle<UserStore>> context={store}>
+        <CTXProvider<UseStateHandle<User>> context={store}>
             { for props.children.iter() }
-        </ContextProvider<UseStateHandle<UserStore>>>
+        </CTXProvider<UseStateHandle<User>>>
     }
 }

@@ -1,8 +1,8 @@
 use yew::{function_component, html};
-use crate::{components::Plan, store::user::Plans};
+use crate::{components::Plan, store::objects::user::Plans};
 
 #[function_component(PlansComponent)]
-pub fn plans() -> Html{
+pub fn plans_component() -> Html{
     html!{
         <div class="align-middle align-self-center text-center">
             <h1>{"Plans"}</h1>

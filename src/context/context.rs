@@ -4,13 +4,12 @@ use yew_router::prelude::{use_history, AnyHistory, History};
 use crate::{
     helpers::storage::{remove_user, set_user},
     routes::AppRoute,
+    store::objects::user::User,
 };
-
-use super::user::UserStore;
 
 #[derive(Clone)]
 pub struct UseStoreContextHandle {
-    user: UseStateHandle<UserStore>,
+    user: UseStateHandle<User>,
     history: AnyHistory,
 }
 
@@ -21,17 +20,17 @@ pub fn get_store() -> UseStoreContextHandle {
 }
 
 impl UseStoreContextHandle {
-    pub fn login(&self, user: UserStore) {
+    pub fn login(&self, user: User) {
         set_user(user.clone());
         self.user.set(user);
         self.history.push(AppRoute::Home)
     }
     pub fn logout(&self) {
         remove_user();
-        self.user.set(UserStore::default());
+        self.user.set(User::default());
         self.history.push(AppRoute::Home)
     }
-    pub fn get_user(&self) -> UseStateHandle<UserStore> {
+    pub fn get_user(&self) -> UseStateHandle<User> {
         self.user.clone()
     }
 }

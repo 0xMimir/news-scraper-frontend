@@ -3,8 +3,8 @@ use yew_hooks::use_clipboard;
 use yew_router::prelude::{use_history, History};
 
 use crate::helpers::storage::get_key;
-use crate::store::context::get_store;
-use crate::store::user::Plans;
+use crate::context::get_store;
+use crate::store::objects::user::Plans;
 
 use super::AppRoute;
 use crate::components::PlansComponent;

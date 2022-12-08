@@ -4,8 +4,8 @@ use yew_router::prelude::*;
 use crate::components::{Login, Register};
 use crate::helpers::request::API_ROOT;
 use crate::helpers::storage::get_key;
-use crate::store::user::Plans;
-use crate::{routes::AppRoute, store::context::get_store};
+use crate::store::objects::user::Plans;
+use crate::{context::get_store, routes::AppRoute};
 
 /// Nav component
 #[function_component(Navbar)]

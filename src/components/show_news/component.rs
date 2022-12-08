@@ -1,6 +1,6 @@
 use yew::{function_component, html, Properties, Html};
 
-use crate::store::news::NewsEntry;
+use crate::store::objects::news::NewsEntry;
 
 
 #[derive(Properties, PartialEq, Eq)]
