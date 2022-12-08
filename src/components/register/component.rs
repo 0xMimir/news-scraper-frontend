@@ -1,9 +1,11 @@
 use wasm_bindgen::{JsCast, UnwrapThrowExt};
-use web_sys::{InputEvent, Event, HtmlInputElement, FocusEvent};
-use yew::{function_component, html, Callback, use_state, use_effect_with_deps};
+use web_sys::{Event, FocusEvent, HtmlInputElement, InputEvent};
+use yew::{function_component, html, use_effect_with_deps, use_state, Callback};
 use yew_hooks::use_async;
 
-use crate::store::{UserInfo, get_store};
+use crate::input_callback;
+use crate::store::context::get_store;
+use crate::store::user::UserStore;
 
 use crate::components::ShowError;
 
@@ -18,48 +20,32 @@ pub fn register() -> Html {
         let username = (*username_handle).clone();
         let password = (*password_handle).clone();
         let email = (*email_handle).clone();
-        use_async(async move {
-            UserInfo::register(&email, &username, &password).await
-        })
+        use_async(async move { UserStore::register(&email, &username, &password).await })
     };
 
-    let username_callback = Callback::from(move |input: InputEvent| {
-        let event: Event = input.dyn_into().unwrap_throw();
-        let input_elem: HtmlInputElement = event.target().unwrap_throw().dyn_into().unwrap_throw();
-        username_handle.set(input_elem.value())
-    });
-
-    let password_callback = Callback::from(move |input: InputEvent| {
-        let event: Event = input.dyn_into().unwrap_throw();
-        let input_elem: HtmlInputElement = event.target().unwrap_throw().dyn_into().unwrap_throw();
-        password_handle.set(input_elem.value())
-    });
-
-    let email_callback = Callback::from(move |input: InputEvent| {
-        let event: Event = input.dyn_into().unwrap_throw();
-        let input_elem: HtmlInputElement = event.target().unwrap_throw().dyn_into().unwrap_throw();
-        email_handle.set(input_elem.value())
-    });
+    let username_callback = input_callback!(username_handle);
+    let password_callback = input_callback!(password_handle);
+    let email_callback = input_callback!(email_handle);
 
     let register_callback = {
         let handle = register_handle.clone();
         Callback::from(move |e: FocusEvent| {
             e.prevent_default();
             handle.run();
-        }) 
+        })
     };
 
     use_effect_with_deps(
         move |register_handle| {
-            if let Some(user) = &register_handle.data{
+            if let Some(user) = &register_handle.data {
                 store.login(user.clone());
             }
             || ()
         },
-        register_handle.clone()
+        register_handle.clone(),
     );
 
-    html!{
+    html! {
         <div class="inner-form">
             <h1>{"Login"}</h1>
             <form onsubmit={register_callback }>

@@ -1,7 +1,8 @@
 use yew::{function_component, html, Html, Properties};
 use yew_hooks::{use_async, use_interval, use_is_first_mount};
 
-use crate::services::{AdminStore, ScraperInfo};
+use crate::store::admin::{ScraperInfo, AdminStore};
+
 
 #[derive(Properties, PartialEq)]
 struct RowParams {

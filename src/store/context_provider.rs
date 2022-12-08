@@ -4,10 +4,9 @@ use yew::{
 };
 use yew_hooks::{use_async, use_mount};
 
-use crate::{
-    services::{storage::{get_key, set_user}, AuthStore},
-    store::UserInfo,
-};
+use crate::helpers::storage::{get_key, set_user};
+
+use super::user::UserStore;
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct Props {
@@ -16,8 +15,8 @@ pub struct Props {
 
 #[function_component(StoreProvider)]
 pub fn store_provider(props: &Props) -> Html {
-    let store = use_state(UserInfo::default);
-    let update_user = use_async(async move { AuthStore::current().await });
+    let store = use_state(UserStore::default);
+    let update_user = use_async(async move { UserStore::current().await });
 
     {
         let update_user = update_user.clone();
@@ -37,7 +36,7 @@ pub fn store_provider(props: &Props) -> Html {
                     store.set(user.clone());
                 }
                 if update_user.error.is_some() {
-                    store.set(UserInfo::empty())
+                    store.set(UserStore::empty())
                 }
                 || ()
             },
@@ -46,8 +45,8 @@ pub fn store_provider(props: &Props) -> Html {
     }
 
     html! {
-        <ContextProvider<UseStateHandle<UserInfo>> context={store}>
+        <ContextProvider<UseStateHandle<UserStore>> context={store}>
             { for props.children.iter() }
-        </ContextProvider<UseStateHandle<UserInfo>>>
+        </ContextProvider<UseStateHandle<UserStore>>>
     }
 }

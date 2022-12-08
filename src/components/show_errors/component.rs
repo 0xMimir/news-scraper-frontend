@@ -1,6 +1,6 @@
 use yew::prelude::*;
 
-use crate::error::Error;
+use crate::Error;
 
 #[derive(Properties, Clone, PartialEq, Eq)]
 pub struct Props {

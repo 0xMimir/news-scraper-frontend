@@ -1,7 +1,8 @@
 use chrono::NaiveDateTime;
 use yew::{function_component, html, Html, Properties};
 
-use crate::services::NewsEntry;
+use crate::store::news::NewsEntry;
+
 
 #[derive(Properties, PartialEq, Eq)]
 pub struct Props {

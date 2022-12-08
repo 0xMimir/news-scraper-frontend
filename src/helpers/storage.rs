@@ -2,12 +2,13 @@ use gloo::storage::{LocalStorage, Storage};
 use lazy_static::lazy_static;
 use parking_lot::RwLock;
 
-use crate::store::UserInfo;
+use crate::store::user::UserStore;
+
 
 const STORAGE_KEY: &str = "user";
 
 lazy_static!{
-    pub static ref TOKEN: RwLock<Option<UserInfo>> = {
+    pub static ref TOKEN: RwLock<Option<UserStore>> = {
         if let Ok(token) = LocalStorage::get(STORAGE_KEY) {
             RwLock::new(Some(token))
         } else {
@@ -16,7 +17,7 @@ lazy_static!{
     };
 }
 
-pub fn set_user(user: UserInfo){
+pub fn set_user(user: UserStore){
     LocalStorage::set(STORAGE_KEY, &user)
         .expect("failed to set api_key");
 
@@ -29,7 +30,7 @@ pub fn get_key() -> Option<String>{
         .map(|u| u.api_key)
 }
 
-pub fn get_user() -> Option<UserInfo>{
+pub fn get_user() -> Option<UserStore>{
     let token_lock = TOKEN.read();
     token_lock.clone()
 }

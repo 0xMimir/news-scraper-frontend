@@ -1,6 +1,7 @@
 use yew::{function_component, html, Properties, Html};
 
-use crate::services::NewsEntry;
+use crate::store::news::NewsEntry;
+
 
 #[derive(Properties, PartialEq, Eq)]
 pub struct Props{

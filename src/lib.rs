@@ -1,6 +1,7 @@
-mod error;
-pub use error::Error;
-pub mod services;
+pub mod helpers;
+
+pub use helpers::error::Error;
+
 pub mod store;
 pub mod app;
 pub mod components;

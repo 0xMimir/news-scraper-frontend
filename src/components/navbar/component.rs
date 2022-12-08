@@ -2,9 +2,10 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 
 use crate::components::{Login, Register};
-use crate::services::helpers::API_ROOT;
-use crate::store::Plans;
-use crate::{routes::AppRoute, services::storage::get_key, store::get_store};
+use crate::helpers::request::API_ROOT;
+use crate::helpers::storage::get_key;
+use crate::store::user::Plans;
+use crate::{routes::AppRoute, store::context::get_store};
 
 /// Nav component
 #[function_component(Navbar)]

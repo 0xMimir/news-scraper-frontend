@@ -2,8 +2,9 @@ use yew::{function_component, html, Callback};
 use yew_hooks::use_clipboard;
 use yew_router::prelude::{use_history, History};
 
-use crate::store::Plans;
-use crate::{services::storage::get_key, store::get_store};
+use crate::helpers::storage::get_key;
+use crate::store::context::get_store;
+use crate::store::user::Plans;
 
 use super::AppRoute;
 use crate::components::PlansComponent;
@@ -23,7 +24,7 @@ pub fn user() -> Html {
         let api_key = user.api_key.clone();
         Callback::from(move |_| clipboard.write_text(api_key.clone()))
     };
-    
+
     html! {
         <>
             <br />

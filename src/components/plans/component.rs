@@ -1,5 +1,5 @@
 use yew::{function_component, html};
-use crate::{components::Plan, store::Plans};
+use crate::{components::Plan, store::user::Plans};
 
 #[function_component(PlansComponent)]
 pub fn plans() -> Html{

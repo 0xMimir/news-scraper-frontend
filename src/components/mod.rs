@@ -1,6 +1,3 @@
-mod context_wrapper;
-pub use context_wrapper::StoreProvider;
-
 mod container;
 pub use container::Container;
 

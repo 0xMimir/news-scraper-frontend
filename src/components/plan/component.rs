@@ -1,7 +1,8 @@
 use thousands::Separable;
 use yew::{function_component, html, Html, Properties};
 
-use crate::store::Plans;
+use crate::store::user::Plans;
+
 
 #[derive(Properties, PartialEq)]
 pub struct Props {

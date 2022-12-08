@@ -1,14 +1,12 @@
 use std::f32::INFINITY;
 
+use reqwest::Method;
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    services::{storage::get_user, AuthStore},
-    Error,
-};
+use crate::helpers::{error::Error, request::request, storage::get_user};
 
 #[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
-pub struct UserInfo {
+pub struct UserStore {
     pub username: String,
     pub email: String,
     pub created_at: String,
@@ -23,7 +21,7 @@ pub enum Plans {
     Free,
     Basic,
     Premium,
-    Staff
+    Staff,
 }
 
 impl Plans {
@@ -37,15 +35,37 @@ impl Plans {
     }
 }
 
-impl UserInfo {
+#[derive(Serialize, Debug)]
+struct LoginForm {
+    username: String,
+    password: String,
+}
+
+#[derive(Serialize, Debug)]
+struct RegisterForm {
+    email: String,
+    username: String,
+    password: String,
+}
+
+impl UserStore {
     pub async fn login(username: &str, password: &str) -> Result<Self, Error> {
-        AuthStore::login(username, password).await
+        let form = LoginForm {
+            username: username.to_owned(),
+            password: password.to_owned(),
+        };
+        request(Method::POST, "/auth/login", Some(form)).await
     }
     pub async fn register(email: &str, username: &str, password: &str) -> Result<Self, Error> {
-        AuthStore::register(email, username, password).await
+        let form = RegisterForm {
+            email: email.to_owned(),
+            username: username.to_owned(),
+            password: password.to_owned(),
+        };
+        request(Method::POST, "/auth/register", Some(form)).await
     }
     pub fn empty() -> Self {
-        UserInfo {
+        Self {
             username: "".to_owned(),
             api_key: "".to_owned(),
             created_at: "".to_owned(),
@@ -55,9 +75,13 @@ impl UserInfo {
             credits_used: 0,
         }
     }
+
+    pub async fn current() -> Result<Self, Error> {
+        request(Method::GET, "/auth/self", None::<()>).await
+    }
 }
 
-impl Default for UserInfo {
+impl Default for UserStore {
     fn default() -> Self {
         match get_user() {
             Some(user) => user,

@@ -1,20 +1,17 @@
+use thousands::Separable;
 use yew::{function_component, html};
 use yew_hooks::{use_async, use_is_first_mount};
-use thousands::Separable;
 
-use crate::services::NewsStore;
-use crate::components::ShowNews;
+use crate::{components::ShowNews, store::news::NewsStore};
 
 #[function_component(GetNews)]
-pub fn get_news() -> Html{
-    let state = use_async(async move {
-        NewsStore::get_news().await
-    });
+pub fn get_news() -> Html {
+    let state = use_async(async move { NewsStore::get_news().await });
 
-    if use_is_first_mount(){
+    if use_is_first_mount() {
         state.run();
     }
-    html!{
+    html! {
         <div class="text-center" style="padding-top: 7vh">
             <h3>{"Get latest news"}</h3>
             {

@@ -1,7 +1,7 @@
 use yew::{function_component, html};
 use yew_hooks::{use_async, use_is_first_mount};
 
-use crate::{components::GetNews, services::NewsStore};
+use crate::{components::GetNews, store::news::NewsStore};
 
 /// Home page
 #[function_component(Home)]

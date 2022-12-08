@@ -4,7 +4,9 @@ use dotenv_codegen::dotenv;
 use reqwest::{Method, Client, header::HeaderValue};
 use serde::{de::DeserializeOwned, Serialize};
 
-use crate::{Error, services::storage::get_key, error::ErrorJson};
+use crate::helpers::error::{Error, ErrorJson};
+
+use super::storage::get_key;
 
 pub static API_ROOT: &str = dotenv!("API");
 
