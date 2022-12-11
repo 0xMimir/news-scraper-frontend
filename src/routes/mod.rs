@@ -1,14 +1,14 @@
 use yew::{html, Html};
 
 mod about;
+mod admin;
 mod home;
 mod user;
-mod admin;
 
 use about::About;
+use admin::AdminPage;
 use home::Home;
 use user::User;
-use admin::AdminPage;
 use yew_router::Routable;
 
 use crate::components::*;
@@ -34,11 +34,11 @@ pub enum AppRoute {
 /// Switch app routes
 #[allow(clippy::let_unit_value)]
 pub fn switch(routes: &AppRoute) -> Html {
-    if routes == &AppRoute::PageNotFound{
-        return html!{ <NotFound /> };
+    if routes == &AppRoute::PageNotFound {
+        return html! { <NotFound /> };
     }
-    
-    html!{
+
+    html! {
         <Container>
             {match routes{
                 AppRoute::Home => html! { <Home /> },

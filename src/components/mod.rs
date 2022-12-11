@@ -33,3 +33,12 @@ pub use news_entry_html::NewsEntryHtml;
 
 mod container;
 pub use container::Container;
+
+mod forbiden;
+pub use forbiden::Forbiden;
+
+pub mod admin_module;
+pub use admin_module::AdminModule;
+
+mod show_users;
+pub use show_users::ShowUsers;

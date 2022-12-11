@@ -116,34 +116,30 @@ pub fn scrapers_info() -> Html {
     };
 
     html! {
-        <>
-            <h4>{"Scrapers info:"}</h4>
-            <table class="table table-dark table-fixed">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">{"Scraper"}</th>
-                        <th scope="col">{"Total"}</th>
-                        <th scope="col">{"Scraped"}</th>
-                        <th scope="col">{"Unscraped"}</th>
-                        <th scope="col">{"Deleted"}</th>
-                        <th scope="col">{"Processed"}</th>
-                        <th scope="col">{"Errors"}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {if let Some(news) = &state.data{
-                        news.iter().map(|x| html!{
-                            <TableRow row_data={x.clone()} />
-                        }).collect::<Html>()
-                    }else{
-                        html!{}
-                    }}
-
-                </tbody>
-                <tfoot class="thead-dark">
-                    <TableRow row_data={sum_row} />
-                </tfoot>
-            </table>
-        </>
+        <table class="table table-dark table-fixed">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">{"Scraper"}</th>
+                    <th scope="col">{"Total"}</th>
+                    <th scope="col">{"Scraped"}</th>
+                    <th scope="col">{"Unscraped"}</th>
+                    <th scope="col">{"Deleted"}</th>
+                    <th scope="col">{"Processed"}</th>
+                    <th scope="col">{"Errors"}</th> 
+                </tr>
+            </thead>
+            <tbody>
+                {if let Some(news) = &state.data{
+                    news.iter().map(|x| html!{
+                        <TableRow row_data={x.clone()} />
+                    }).collect::<Html>()
+                }else{
+                    html!{}
+                }}
+            </tbody>
+            <tfoot class="thead-dark">
+                <TableRow row_data={sum_row} />
+            </tfoot>
+        </table>
     }
 }

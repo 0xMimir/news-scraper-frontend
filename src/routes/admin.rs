@@ -1,24 +1,27 @@
 use yew::{function_component, html};
-use yew_router::prelude::{use_history, History};
 
+use crate::components::{AdminModule, Forbiden, ShowUsers};
 use crate::{context::get_store, routes::ScrapersInfo, store::objects::user::Plans};
-
-use super::AppRoute;
 
 #[function_component(AdminPage)]
 pub fn admin_page() -> Html {
     let user = get_store().get_user();
 
-    if user.plan != Plans::Staff {
-        let history = use_history().unwrap();
-        history.push(AppRoute::PageNotFound);
-        return html! {};
-    }
+    let scrapers = html! { <ScrapersInfo />};
+    let users = html! { <ShowUsers />};
 
-    html! {
-        <>
-            <h1>{"Admin Dashboard"}</h1>
-            <ScrapersInfo />
-        </>
+    match user.plan {
+        Plans::Staff => html! {
+            <>
+                <h1>{"Admin Dashboard"}</h1>
+                <AdminModule title="Scrapers info" module={scrapers} />
+                <AdminModule title="Users" module={users} />
+            </>
+        },
+        _ => {
+            html! {
+                <Forbiden />
+            }
+        }
     }
 }

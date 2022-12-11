@@ -3,7 +3,7 @@ use serde::Serialize;
 
 use crate::helpers::{error::Error, request::request};
 
-use super::objects::user::User;
+use super::objects::{user::User, response::Response};
 
 #[derive(Serialize, Debug)]
 struct LoginForm {
@@ -38,5 +38,12 @@ impl UserStore {
     }
     pub async fn current() -> Result<User, Error> {
         request(Method::GET, "/auth/self", None::<()>).await
+    }
+    pub async fn get_users() -> Result<Response<User>, Error>{
+        request(
+            Method::GET,
+            "/admin/users",
+            None::<()>
+        ).await
     }
 }

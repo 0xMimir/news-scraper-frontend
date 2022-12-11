@@ -1,4 +1,4 @@
-use super::objects::news::{NewsSource, Response};
+use super::objects::{news::{NewsSource, NewsEntry}, response::Response};
 use crate::helpers::{error::Error, request::request};
 use reqwest::Method;
 
@@ -11,7 +11,7 @@ impl NewsStore {
     pub async fn get_news_count() -> Result<i32, Error> {
         Self::get_news_sources().await.map(|s| s.len() as i32)
     }
-    pub async fn get_news() -> Result<Response, Error> {
+    pub async fn get_news() -> Result<Response<NewsEntry>, Error> {
         request(Method::GET, "/public/example", None::<()>).await
     }
 }

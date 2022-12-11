@@ -7,14 +7,6 @@ pub struct NewsSource{
     pub blog_id: String
 }
 
-#[derive(Deserialize, Debug, Clone)]
-pub struct Response{
-    pub page: i64,
-    pub per_page: i64,
-    pub total: i64,
-    pub items: Vec<NewsEntry>
-}
-
 #[derive(Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct NewsEntry{
     pub url: String,
