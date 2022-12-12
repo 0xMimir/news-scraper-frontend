@@ -15,6 +15,7 @@ pub fn admin_page() -> Html {
             <>
                 <h1>{"Admin Dashboard"}</h1>
                 <AdminModule title="Scrapers info" module={scrapers} />
+                <br />
                 <AdminModule title="Users" module={users} />
             </>
         },

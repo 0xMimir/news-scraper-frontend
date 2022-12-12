@@ -1,0 +1,24 @@
+.admin-dropdown-button{
+    background-color: inherit;
+    border: none;
+    color: white;
+    font-size: large;
+}
+
+.admin-dropdown-button:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.admin-header{
+    display: block;
+    padding: 10px;
+}
+
+.admin-header h4{
+    float: left;
+}
+
+.admin-header button{
+    float: right;
+}
