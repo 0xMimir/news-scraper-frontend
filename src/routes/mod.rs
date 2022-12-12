@@ -11,10 +11,11 @@ use home::Home;
 use user::User;
 use yew_router::Routable;
 
-use crate::components::*;
+use crate::components::{PlansComponent, NotFound, Container};
+
 
 /// App routes
-#[derive(Routable, Debug, Clone, PartialEq, Eq)]
+#[derive(Routable, PartialEq, Eq, Clone, Debug)]
 pub enum AppRoute {
     #[at("/about")]
     About,
@@ -31,16 +32,14 @@ pub enum AppRoute {
     Home,
 }
 
-/// Switch app routes
-#[allow(clippy::let_unit_value)]
-pub fn switch(routes: &AppRoute) -> Html {
-    if routes == &AppRoute::PageNotFound {
+pub fn switch(route: AppRoute) -> Html {
+    if route == AppRoute::PageNotFound {
         return html! { <NotFound /> };
     }
 
     html! {
         <Container>
-            {match routes{
+            {match route{
                 AppRoute::Home => html! { <Home /> },
                 AppRoute::About => html! { <About /> },
                 AppRoute::Plans => html! { <PlansComponent /> },

@@ -1,4 +1,4 @@
-use yew::{function_component, html, Properties, virtual_dom::VNode, use_state_eq};
+use yew::{function_component, html, Properties, virtual_dom::VNode, use_state_eq, Html};
 
 use crate::helpers::input_macro::button_switch;
 

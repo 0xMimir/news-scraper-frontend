@@ -2,7 +2,9 @@ use std::f32::INFINITY;
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize, Default)]
+use crate::helpers::storage::get_user;
+
+#[derive(Clone, Debug, PartialEq, Eq, Deserialize, Serialize)]
 pub struct User {
     pub id: String,
     pub username: String,
@@ -33,8 +35,26 @@ impl Plans {
     }
 }
 
-impl Default for Plans{
+impl Default for Plans {
     fn default() -> Self {
         Self::Free
+    }
+}
+
+impl Default for User {
+    fn default() -> Self {
+        match get_user() {
+            Some(user) => user,
+            None => Self {
+                id: String::default(),
+                username: String::default(),
+                email: String::default(),
+                created_at: String::default(),
+                plan: Plans::default(),
+                api_key: String::default(),
+                credits_remaining: 0,
+                credits_used: 0,
+            },
+        }
     }
 }

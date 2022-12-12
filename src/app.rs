@@ -1,9 +1,9 @@
-use yew::prelude::*;
-use yew_router::prelude::*;
+use yew::{function_component, html, Html};
+use yew_router::{BrowserRouter, Switch};
 
 use crate::components::Navbar;
-use crate::routes::{switch, AppRoute};
 use crate::context::ContextProvider;
+use crate::routes::{switch, AppRoute};
 
 /// Root app component
 #[function_component(App)]
@@ -12,7 +12,7 @@ pub fn app() -> Html {
         <ContextProvider>
             <BrowserRouter>
                 <Navbar />
-                <Switch<AppRoute> render={Switch::render(switch)} />
+                <Switch<AppRoute> render={switch} />
             </BrowserRouter>
         </ContextProvider>
     }

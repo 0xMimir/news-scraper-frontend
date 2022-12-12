@@ -1,4 +1,4 @@
-use yew::{function_component, html};
+use yew::{function_component, html, Html};
 use crate::{components::Plan, store::objects::user::Plans};
 
 #[function_component(PlansComponent)]

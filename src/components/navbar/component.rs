@@ -4,17 +4,17 @@ use yew_router::prelude::*;
 use crate::components::{Login, Register};
 use crate::helpers::request::API_ROOT;
 use crate::helpers::storage::get_key;
+use crate::routes::AppRoute;
 use crate::store::objects::user::Plans;
-use crate::{context::get_store, routes::AppRoute};
+use crate::store::user::{UserState, UserStore};
 
 /// Nav component
 #[function_component(Navbar)]
 pub fn nav() -> Html {
-    let store = get_store();
+    let user = use_context::<UserState>().unwrap();
     let loged_in = get_key().is_some();
     let register = use_state_eq(|| false);
     let state = use_state_eq(|| false);
-    let user = &store.get_user();
 
     let open_modal = {
         let state = state.clone();
@@ -26,7 +26,7 @@ pub fn nav() -> Html {
         Callback::from(move |_| state.set(false))
     };
 
-    let logout = { Callback::from(move |_: MouseEvent| store.logout()) };
+    let logout = { Callback::from(move |_: MouseEvent| UserStore::logout()) };
 
     let register_callback = {
         let register = register.clone();

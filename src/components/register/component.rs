@@ -1,55 +1,55 @@
 use wasm_bindgen::{JsCast, UnwrapThrowExt};
-use web_sys::{Event, FocusEvent, HtmlInputElement, InputEvent};
-use yew::{function_component, html, use_effect_with_deps, use_state, Callback};
-use yew_hooks::use_async;
+use web_sys::{Event, HtmlInputElement, InputEvent, SubmitEvent};
+use yew::platform::spawn_local;
+use yew::{function_component, html, use_context, use_state, Callback, Html};
 
-use crate::input_callback;
-use crate::context::get_store;
-use crate::store::user::UserStore;
+use crate::helpers::storage::set_user;
+use crate::{input_callback, Error};
 
 use crate::components::ShowError;
+use crate::store::user::{UserState, UserStore};
 
 #[function_component(Register)]
 pub fn register() -> Html {
-    let store = get_store();
+    let store = use_context::<UserState>().unwrap();
     let username_handle = use_state(|| "".to_string());
     let password_handle = use_state(|| "".to_string());
     let email_handle = use_state(|| "".to_string());
+    let error_state = use_state(|| None::<Error>);
 
-    let register_handle = {
-        let username = (*username_handle).clone();
-        let password = (*password_handle).clone();
-        let email = (*email_handle).clone();
-        use_async(async move { UserStore::register(&email, &username, &password).await })
+    let register_callback = {
+        let username_handle = username_handle.clone();
+        let password_handle = password_handle.clone();
+        let email_handle = email_handle.clone();
+        let error_state = error_state.clone();
+        Callback::from(move |e: SubmitEvent| {
+            e.prevent_default();
+            let username = (*username_handle).clone();
+            let password = (*password_handle).clone();
+            let email = (*email_handle).clone();
+            let store = store.clone();
+            let error_state = error_state.clone();
+            spawn_local(async move {
+                match UserStore::register(&email, &username, &password).await {
+                    Ok(user) => {
+                        store.set(user.clone());
+                        set_user(user);
+                    }
+                    Err(error) => error_state.set(Some(error)),
+                };
+            });
+        })
     };
 
     let username_callback = input_callback!(username_handle);
     let password_callback = input_callback!(password_handle);
     let email_callback = input_callback!(email_handle);
 
-    let register_callback = {
-        let handle = register_handle.clone();
-        Callback::from(move |e: FocusEvent| {
-            e.prevent_default();
-            handle.run();
-        })
-    };
-
-    use_effect_with_deps(
-        move |register_handle| {
-            if let Some(user) = &register_handle.data {
-                store.login(user.clone());
-            }
-            || ()
-        },
-        register_handle.clone(),
-    );
-
     html! {
         <div class="inner-form">
             <h1>{"Login"}</h1>
             <form onsubmit={register_callback }>
-                <ShowError error={register_handle.error.clone()} />
+                <ShowError error={(*error_state).clone()} />
                 <div class="form-outline mb-4">
                     <label class="form-label">{"Email"}</label>
                     <input type="email" oninput={email_callback} class="form-control" />
