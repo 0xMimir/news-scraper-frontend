@@ -24,6 +24,17 @@ pub enum Plans {
     Staff,
 }
 
+impl ToString for Plans{
+    fn to_string(&self) -> String {
+        match self{
+            Self::Free => "Free",
+            Self::Basic => "Basic",
+            Self::Premium => "Premium",
+            Self::Staff => "Staff"
+        }.to_owned()
+    }
+}
+
 impl Plans {
     pub fn get_max_calls(&self) -> f32 {
         match self {
