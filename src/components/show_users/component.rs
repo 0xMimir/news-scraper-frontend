@@ -24,20 +24,21 @@ pub fn show_users() -> Html {
 
     {
         let state = state.clone();
-        spawn_local(async move {
-            let new_state = match UserStore::get_users().await{
-                Ok(r) => Some(r),
-                Err(_) => None
-            };
-
-            state.set(new_state);
-        })
+        if state.is_none(){
+            spawn_local(async move {
+                let new_state = match UserStore::get_users().await{
+                    Ok(r) => Some(r),
+                    Err(_) => None
+                };
+    
+                state.set(new_state);
+            })
+        }
     }
 
     html!{
         {if let Some(users) = &*state{
             html!{
-                //{for users.items.clone().into_iter().map(Html::from)}
                     <table class="table table-dark">
                         <thead class="thead-dark">
                             <tr>

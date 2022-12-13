@@ -14,10 +14,7 @@ pub fn news_entry_html(props: &Props) -> Html {
     let entry = props.entry.clone();
 
     let naive = NaiveDateTime::from_timestamp_opt(
-        match entry.released_at_unix {
-            Some(i) => i,
-            None => 0,
-        },
+        entry.released_at_unix.unwrap_or(0),
         0,
     )
     .unwrap();

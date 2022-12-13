@@ -43,7 +43,10 @@ impl Component for ContextProvider {
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         self.state = match msg {
             Ok(user) => user,
-            Err(_) => User::default(),
+            Err(_) => {
+                UserStore::logout();
+                User::empty()
+            },
         };
         set_user(self.state.clone());
         true

@@ -56,16 +56,22 @@ impl Default for User {
     fn default() -> Self {
         match get_user() {
             Some(user) => user,
-            None => Self {
-                id: String::default(),
-                username: String::default(),
-                email: String::default(),
-                created_at: String::default(),
-                plan: Plans::default(),
-                api_key: String::default(),
-                credits_remaining: 0,
-                credits_used: 0,
-            },
+            None => Self::empty()
+        }
+    }
+}
+
+impl User{
+    pub fn empty() -> Self{
+        Self {
+            id: String::default(),
+            username: String::default(),
+            email: String::default(),
+            created_at: String::default(),
+            plan: Plans::default(),
+            api_key: String::default(),
+            credits_remaining: 0,
+            credits_used: 0,
         }
     }
 }

@@ -11,8 +11,10 @@ use home::Home;
 use user::User;
 use yew_router::Routable;
 
-use crate::components::{PlansComponent, NotFound, Container};
-
+use crate::{
+    components::{Container, NotFound, PlansComponent},
+    helpers::storage::get_key,
+};
 
 /// App routes
 #[derive(Routable, PartialEq, Eq, Clone, Debug)]
@@ -37,17 +39,22 @@ pub fn switch(route: AppRoute) -> Html {
         return html! { <NotFound /> };
     }
 
-    html! {
-        <Container>
-            {match route{
-                AppRoute::Home => html! { <Home /> },
-                AppRoute::About => html! { <About /> },
-                AppRoute::Plans => html! { <PlansComponent /> },
-                AppRoute::User => html! { <User /> },
-                AppRoute::AdminPage => html! { <AdminPage />},
-                // This should never happen
-                AppRoute::PageNotFound => html!{}
-            }}
-        </Container>
+    let valid_route = match (route, get_key().is_some()) {
+        (AppRoute::Home, _) => Some(html! { <Home /> }),
+        (AppRoute::About, _) => Some(html! { <About /> }),
+        (AppRoute::Plans, _) => Some(html! { <PlansComponent /> }),
+        (AppRoute::User, true) => Some(html! { <User /> }),
+        (AppRoute::AdminPage, true) => Some(html! { <AdminPage />}),
+        // This should never happen
+        _ => None,
+    };
+
+    match valid_route {
+        Some(html) => html! {
+            <Container>
+                {html}
+            </Container>
+        },
+        None => html! { <NotFound /> },
     }
 }

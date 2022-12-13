@@ -26,8 +26,11 @@ pub fn set_user(user: User){
 }
 
 pub fn get_key() -> Option<String>{
-    get_user()
-        .map(|u| u.api_key)
+    let key = get_user()?.api_key;
+    match key.is_empty(){
+        false => Some(key),
+        true => None
+    }
 }
 
 pub fn get_user() -> Option<User>{

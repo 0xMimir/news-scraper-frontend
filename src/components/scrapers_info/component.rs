@@ -1,10 +1,9 @@
-use yew::{
-    function_component, html,
-    platform::{spawn_local},
-    use_state, Html, Properties,
-};
+use yew::{function_component, html, Component, Html, Properties};
 
-use crate::store::{admin::AdminStore, objects::scraper_info::ScraperInfo};
+use crate::{
+    store::{admin::AdminStore, objects::scraper_info::ScraperInfo},
+    Error,
+};
 
 #[derive(Properties, PartialEq)]
 struct RowParams {
@@ -62,91 +61,94 @@ fn table_row(props: &RowParams) -> Html {
     }
 }
 
-#[function_component(ScrapersInfo)]
-pub fn scrapers_info() -> Html {
-    let state = use_state(|| None);
+fn sum_row(scrapers_info: &[ScraperInfo]) -> ScraperInfo {
+    let f = scrapers_info
+        .iter()
+        .map(|x| {
+            (
+                x.total,
+                x.scraped,
+                x.unscraped,
+                x.deleted,
+                x.processed,
+                x.error,
+            )
+        })
+        .collect::<Vec<(i32, i32, i32, i32, i32, i32)>>();
 
-    {
-        let state = state.clone();
-        if state.is_none() {
-            spawn_local(async move {
-                let new_state = match AdminStore::get_scraper_info().await {
-                    Ok(state) => Some(state),
-                    Err(_) => None,
-                };
-                state.set(new_state);
-            })
+    let total: i32 = f.iter().map(|x| x.0).sum();
+    let scraped: i32 = f.iter().map(|x| x.1).sum();
+    let unscraped: i32 = f.iter().map(|x| x.2).sum();
+    let deleted: i32 = f.iter().map(|x| x.3).sum();
+    let processed: i32 = f.iter().map(|x| x.4).sum();
+    let error: i32 = f.iter().map(|x| x.5).sum();
+
+    ScraperInfo {
+        blog_id: "Total: ".to_owned(),
+        total,
+        scraped,
+        unscraped,
+        deleted,
+        processed,
+        error,
+    }
+}
+
+pub struct ScrapersInfo {
+    scrapers_info: Option<Vec<ScraperInfo>>,
+}
+
+impl Component for ScrapersInfo {
+    type Message = Result<Vec<ScraperInfo>, Error>;
+    type Properties = ();
+    fn create(ctx: &yew::Context<Self>) -> Self {
+        ctx.link().send_future(AdminStore::get_scraper_info());
+
+        let callback = ctx.link().callback(Result::Ok);
+        AdminStore::update_scraper_info(callback);
+
+        Self {
+            scrapers_info: None,
         }
     }
+    fn update(&mut self, _ctx: &yew::Context<Self>, msg: Self::Message) -> bool {
+        self.scrapers_info = match msg {
+            Ok(update) => Some(update),
+            Err(_) => None,
+        };
 
-    let sum_row = if let Some(news) = &*state {
-        let f = news
-            .iter()
-            .map(|x| {
-                (
-                    x.total,
-                    x.scraped,
-                    x.unscraped,
-                    x.deleted,
-                    x.processed,
-                    x.error,
-                )
-            })
-            .collect::<Vec<(i32, i32, i32, i32, i32, i32)>>();
-
-        let total: i32 = f.iter().map(|x| x.0).sum();
-        let scraped: i32 = f.iter().map(|x| x.1).sum();
-        let unscraped: i32 = f.iter().map(|x| x.2).sum();
-        let deleted: i32 = f.iter().map(|x| x.3).sum();
-        let processed: i32 = f.iter().map(|x| x.4).sum();
-        let error: i32 = f.iter().map(|x| x.5).sum();
-
-        ScraperInfo {
-            blog_id: "Total: ".to_owned(),
-            total,
-            scraped,
-            unscraped,
-            deleted,
-            processed,
-            error,
+        true
+    }
+    fn view(&self, _ctx: &yew::Context<Self>) -> Html {
+        match &self.scrapers_info {
+            Some(scrapers) => {
+                html! {
+                    <table class="table table-dark table-fixed">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">{"Scraper"}</th>
+                                <th scope="col">{"Total"}</th>
+                                <th scope="col">{"Scraped"}</th>
+                                <th scope="col">{"Unscraped"}</th>
+                                <th scope="col">{"Deleted"}</th>
+                                <th scope="col">{"Processed"}</th>
+                                <th scope="col">{"Errors"}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                scrapers.iter().map(|x| html!{
+                                    <TableRow row_data={x.clone()} />
+                                }).collect::<Html>()
+                            }
+                        </tbody>
+                        <tfoot class="thead-dark">
+                            <TableRow row_data={sum_row(scrapers)} />
+                        </tfoot>
+                    </table>
+                }
+            }
+            None => html! {},
         }
-    } else {
-        ScraperInfo {
-            blog_id: "Total: ".to_owned(),
-            total: 0,
-            scraped: 0,
-            unscraped: 0,
-            deleted: 0,
-            processed: 0,
-            error: 0,
-        }
-    };
-
-    html! {
-        <table class="table table-dark table-fixed">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">{"Scraper"}</th>
-                    <th scope="col">{"Total"}</th>
-                    <th scope="col">{"Scraped"}</th>
-                    <th scope="col">{"Unscraped"}</th>
-                    <th scope="col">{"Deleted"}</th>
-                    <th scope="col">{"Processed"}</th>
-                    <th scope="col">{"Errors"}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {if let Some(news) = &*state{
-                    news.iter().map(|x| html!{
-                        <TableRow row_data={x.clone()} />
-                    }).collect::<Html>()
-                }else{
-                    html!{}
-                }}
-            </tbody>
-            <tfoot class="thead-dark">
-                <TableRow row_data={sum_row} />
-            </tfoot>
-        </table>
     }
 }
